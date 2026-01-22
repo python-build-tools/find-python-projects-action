@@ -28,7 +28,7 @@
     "@actions/core": "^1.11.1",
     "@iarna/toml": "^2.2.5",
     "globby": "^11.1.0",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.23"
   },
   "devDependencies": {
     "@vercel/ncc": "^0.38.4",
