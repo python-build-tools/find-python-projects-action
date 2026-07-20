@@ -49,7 +49,7 @@ jobs:
           echo '${{ toJson(matrix.project) }}'
 
       - name: Setup Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
           python-version-file: ${{ matrix.project.path }}
 
