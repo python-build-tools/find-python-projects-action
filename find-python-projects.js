@@ -1,17 +1,13 @@
-const core = require("@actions/core");
+import * as core from "@actions/core";
 
-const fs = require("node:fs/promises");
-const path = require("node:path");
+import fs from "node:fs/promises";
+import path from "node:path";
 
-const globby = require("globby");
-const TOML = require("@iarna/toml");
-const _get = require("lodash/get.js");
+import globby from "globby";
+import TOML from "@iarna/toml";
+import _get from "lodash/get.js";
 
-module.exports = {
-  determineSkips,
-  findPythonProjects,
-  run,
-};
+export { determineSkips, findPythonProjects, run };
 
 const GLOBAL_KEY = "__GLOBAL__"; // reserved key for commands without a project specified
 

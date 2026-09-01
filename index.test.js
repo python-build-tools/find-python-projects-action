@@ -1,12 +1,17 @@
-const findPythonProjects = require('./find-python-projects.js');
+import { jest } from "@jest/globals";
 
-describe('index', () => {
-  const runMock = jest.spyOn(findPythonProjects, 'run').mockImplementation();
+const runMock = jest.fn();
 
-  it('calls run when imported', () => {
-    require('./index.js')
+jest.unstable_mockModule("./find-python-projects.js", () => ({
+  determineSkips: jest.fn(),
+  findPythonProjects: jest.fn(),
+  run: runMock,
+}));
 
-    expect(runMock).toHaveBeenCalled()
-  })
-})
+describe("index", () => {
+  it("calls run when imported", async () => {
+    await import("./index.js");
 
+    expect(runMock).toHaveBeenCalled();
+  });
+});

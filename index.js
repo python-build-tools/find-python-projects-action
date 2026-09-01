@@ -1,3 +1,3 @@
-const { run } = require('./find-python-projects.js')
+import { run } from "./find-python-projects.js";
 
 run();

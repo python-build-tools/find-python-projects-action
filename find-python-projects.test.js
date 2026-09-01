@@ -1,13 +1,23 @@
-const core = require("@actions/core");
-const mapValues = require("lodash/mapValues.js");
+import { jest } from "@jest/globals";
+import mapValues from "lodash/mapValues.js";
 
-const { run } = require("./find-python-projects.js");
+// ESM namespace objects are sealed, so jest.spyOn cannot patch @actions/core.
+// Mock the module before importing the code under test instead.
+const infoMock = jest.fn();
+const getInputMock = jest.fn();
+const setFailedMock = jest.fn();
+const setOutputMock = jest.fn();
+
+jest.unstable_mockModule("@actions/core", () => ({
+  info: infoMock,
+  getInput: getInputMock,
+  setFailed: setFailedMock,
+  setOutput: setOutputMock,
+}));
+
+const { run } = await import("./find-python-projects.js");
 
 describe("find-python-projects", () => {
-  const infoMock = jest.spyOn(core, "info").mockImplementation();
-  const getInputMock = jest.spyOn(core, "getInput").mockImplementation();
-  const setFailedMock = jest.spyOn(core, "setFailed").mockImplementation();
-  const setOutputMock = jest.spyOn(core, "setOutput").mockImplementation();
 
   const inputsDefaults = {
     "additional-export-paths": "",
