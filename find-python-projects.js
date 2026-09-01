@@ -1,21 +1,15 @@
-const core = require("@actions/core");
+import * as core from "@actions/core";
 
-const fs = require("node:fs/promises");
-const path = require("node:path");
+import fs from "node:fs/promises";
+import path from "node:path";
 
-const globby = require("globby");
-const TOML = require("@iarna/toml");
-const _get = require("lodash/get.js");
-
-module.exports = {
-  determineSkips,
-  findPythonProjects,
-  run,
-};
+import globby from "globby";
+import TOML from "@iarna/toml";
+import _get from "lodash/get.js";
 
 const GLOBAL_KEY = "__GLOBAL__"; // reserved key for commands without a project specified
 
-async function run() {
+export async function run() {
   try {
     const rootDir = core.getInput("root-dir");
     const desiredExportPathsRaw = core.getInput("additional-export-paths");
@@ -43,7 +37,7 @@ async function run() {
  * @param {string[]?} desiredExportPaths
  * @param {Object<string, string>} skips
  */
-async function findPythonProjects(rootDir, desiredExportPaths, skips) {
+export async function findPythonProjects(rootDir, desiredExportPaths, skips) {
   const globbyOpts = {
     gitignore: true,
   };
@@ -187,7 +181,7 @@ function generateCommands(projectTomlParsed) {
  * @param {string} skipsInput - The raw input string.
  * @returns {Record<string, string[]>} Object mapping project (or "__GLOBAL__") to its commands to skip.
  */
-function determineSkips(skipsInput) {
+export function determineSkips(skipsInput) {
   const lines = skipsInput
     .split("\n")
     .map((line) => line.trim())

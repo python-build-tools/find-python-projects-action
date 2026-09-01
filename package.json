@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "GitHub Action for discovering Python projects in a repository and exposing helpful things from pyproject.toml to other steps.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "lint": "eslint .",
     "prepare": "ncc build index.js -o dist --source-map --license licenses.txt",
-    "test": "jest",
+    "test": "NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 jest",
     "all": "npm run lint && npm run prepare && npm run test"
   },
   "repository": {
@@ -25,15 +26,21 @@
   },
   "homepage": "https://github.com/BrandonLWhite/find-python-projects-action#readme",
   "dependencies": {
-    "@actions/core": "^2.0.2",
+    "@actions/core": "^3.0.1",
     "@iarna/toml": "^2.2.5",
     "globby": "^11.1.0",
     "lodash": "^4.18.1"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@jest/globals": "^30.4.2",
     "@vercel/ncc": "^0.44.0",
     "eslint": "^10.9.1",
+    "globals": "^17.12.0",
     "jest": "^30.4.2"
+  },
+  "engines": {
+    "node": "^24.0.0"
   },
   "jest": {
     "coverageReporters": [
@@ -43,7 +50,8 @@
     ],
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "./*.js"
+      "./*.js",
+      "!./eslint.config.js"
     ]
   }
 }
