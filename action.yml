@@ -49,5 +49,5 @@ outputs:
     description: JSON array of all found projects (`project` object) that implement a `package` command
 
 runs:
-  using: "node20"
+  using: "node24"
   main: "dist/index.js"

@@ -1,12 +1,18 @@
-const findPythonProjects = require('./find-python-projects.js');
+import { jest, describe, it, expect } from "@jest/globals";
 
-describe('index', () => {
-  const runMock = jest.spyOn(findPythonProjects, 'run').mockImplementation();
+const runMock = jest.fn();
 
-  it('calls run when imported', () => {
-    require('./index.js')
+// ESM module namespaces are frozen, so `jest.spyOn` can't intercept the
+// `run` binding that index.js imports.  Register the mock before the module
+// under test is imported instead.
+jest.unstable_mockModule("./find-python-projects.js", () => ({
+  run: runMock,
+}));
 
-    expect(runMock).toHaveBeenCalled()
-  })
-})
+await import("./index.js");
 
+describe("index", () => {
+  it("calls run when imported", () => {
+    expect(runMock).toHaveBeenCalled();
+  });
+});

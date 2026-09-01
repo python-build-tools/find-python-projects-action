@@ -1,4 +1,6 @@
-const { determineSkips } = require("./find-python-projects.js");
+import { describe, it, expect } from "@jest/globals";
+
+import { determineSkips } from "./find-python-projects.js";
 
 describe("determineSkips", () => {
   const GLOBAL_KEY = "__GLOBAL__";
